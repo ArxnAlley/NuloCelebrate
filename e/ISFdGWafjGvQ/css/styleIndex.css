@@ -508,6 +508,10 @@ button
 
     display: flex;
 
+    width: 46.4%;
+
+    aspect-ratio: 1158 / 258;
+
     align-items: center;
 
     justify-content: center;
@@ -518,9 +522,29 @@ button
 
     line-height: 1;
 
-    text-shadow: 0.08rem 0.1rem 0 rgba(255, 255, 255, 0.9);
+}
 
-    transform: rotate(1deg);
+.identityTitle::after
+{
+
+    position: absolute;
+
+    inset: 0;
+
+    content: "";
+
+    background: url("../graphics/images/typography/surfboardTitle.png") center / contain no-repeat;
+
+}
+
+.identityTitle > span,
+.identityTitle small,
+.identityTitle strong
+{
+
+    position: absolute;
+
+    opacity: 0;
 
 }
 
@@ -530,12 +554,6 @@ button
     color: var(--coralDark);
 
     font-family: var(--scriptFont);
-
-    font-size: clamp(1.25rem, 6vw, 2rem);
-
-    font-weight: 900;
-
-    letter-spacing: -0.08em;
 
 }
 
@@ -847,9 +865,15 @@ button
 .alohaWord
 {
 
+    position: relative;
+
     display: block;
 
-    color: var(--coral);
+    width: 2.55em;
+
+    height: 0.78em;
+
+    color: transparent;
 
     font-family: var(--scriptFont);
 
@@ -861,11 +885,30 @@ button
 
     line-height: 0.78;
 
-    paint-order: stroke fill;
+    text-shadow: none;
 
-    -webkit-text-stroke: clamp(0.15rem, 0.6vw, 0.32rem) var(--cream);
+    -webkit-text-stroke: 0;
 
-    transform: rotate(-3deg);
+}
+
+.alohaWord::after
+{
+
+    position: absolute;
+
+    top: 50%;
+
+    left: 50%;
+
+    width: 2.701em;
+
+    height: 1.021em;
+
+    content: "";
+
+    background: url("../graphics/images/typography/heroAloha.png") center / 100% 100% no-repeat;
+
+    transform: translate(-50%, -50%);
 
 }
 
@@ -920,7 +963,17 @@ button
 .heroAgeNumber
 {
 
-    color: var(--sunshine);
+    position: relative;
+
+    display: block;
+
+    width: 0.7em;
+
+    height: 0.78em;
+
+    flex: 0 0 auto;
+
+    color: transparent;
 
     font-family: var(--scriptFont);
 
@@ -928,11 +981,30 @@ button
 
     line-height: 0.78;
 
-    transform: rotate(-7deg) translateY(0.15rem);
+    text-shadow: none;
 
-    paint-order: stroke fill;
+    -webkit-text-stroke: 0;
 
-    -webkit-text-stroke: 0.14rem var(--oceanDeep);
+}
+
+.heroAgeNumber::after
+{
+
+    position: absolute;
+
+    top: 50%;
+
+    left: 50%;
+
+    width: 0.891em;
+
+    height: 0.938em;
+
+    content: "";
+
+    background: url("../graphics/images/typography/heroAgeThree.png") center / 100% 100% no-repeat;
+
+    transform: translate(-50%, -50%);
 
 }
 
@@ -950,13 +1022,17 @@ button
 .heroInvitationLine
 {
 
-    width: fit-content;
+    --heroInvitationInlinePadding: 1rem;
+
+    position: relative;
+
+    width: calc(17.22em + var(--heroInvitationInlinePadding) + var(--heroInvitationInlinePadding));
 
     margin: 1rem auto 0;
 
-    padding: 0.55rem 1rem;
+    padding: 0.55rem var(--heroInvitationInlinePadding);
 
-    color: var(--oceanDeep);
+    color: transparent;
 
     background: rgba(255, 246, 223, 0.9);
 
@@ -970,7 +1046,28 @@ button
 
     font-weight: 700;
 
-    transform: rotate(1deg);
+    line-height: 1.7;
+
+}
+
+.heroInvitationLine::after
+{
+
+    position: absolute;
+
+    top: 50%;
+
+    left: 50%;
+
+    width: 17.5em;
+
+    height: 2.315em;
+
+    content: "";
+
+    background: url("../graphics/images/typography/heroInvitationLine.png") center / 100% 100% no-repeat;
+
+    transform: translate(-50%, -50%);
 
 }
 
@@ -1068,7 +1165,7 @@ button
 .isLoaded .alohaWord
 {
 
-    transform: translateY(0) rotate(-3deg) scale(1);
+    transform: translateY(0) scale(1);
 
     transition-delay: 350ms;
 
@@ -1095,7 +1192,7 @@ button
 .isLoaded .heroInvitationLine
 {
 
-    transform: rotate(1deg);
+    transform: none;
 
     transition-delay: 900ms;
 
@@ -6002,16 +6099,6 @@ button
 
     }
 
-    .identityTitle > span,
-    .identityTitle small
-    {
-
-        paint-order: stroke fill;
-
-        -webkit-text-stroke: 0.035rem currentColor;
-
-    }
-
     .hasJs .siteIdentity
     {
 
@@ -6033,18 +6120,9 @@ button
 
     }
 
-    .isLoaded .alohaWord,
     .isLoaded .heroNameLine,
     .isLoaded .heroAgeLine,
-    .isLoaded .heroInvitationLine,
     .isLoaded .heroDetails
-    {
-
-        transform: none;
-
-    }
-
-    .heroAgeNumber
     {
 
         transform: none;
@@ -6054,9 +6132,9 @@ button
     .heroInvitationLine
     {
 
-        max-width: 100%;
+        --heroInvitationInlinePadding: clamp(0.55rem, 2.2vw, 1rem);
 
-        padding-inline: clamp(0.55rem, 2.2vw, 1rem);
+        max-width: 100%;
 
         font-size: clamp(0.82rem, 3.7vw, 1.35rem);
 
@@ -6080,9 +6158,9 @@ button
 
         min-height: 43rem;
 
-        padding-top: 10rem;
+        padding-top: 2rem;
 
-        margin-top: 2rem;
+        margin-top: 0.75rem;
 
     }
 
@@ -6091,11 +6169,11 @@ button
 
         top: -0.25rem;
 
-        right: -2.25rem;
+        right: -4rem;
 
-        width: 8.25rem;
+        width: 8rem;
 
-        height: 11rem;
+        height: 10.75rem;
 
         transition: top 850ms cubic-bezier(0.22, 0.72, 0.2, 1);
 
@@ -6275,7 +6353,7 @@ button
     .heroInvitationLine
     {
 
-        padding-inline: 1.4rem;
+        --heroInvitationInlinePadding: 1.4rem;
 
     }
 
@@ -6734,11 +6812,11 @@ button
 
         top: 0.2rem;
 
-        right: -2rem;
+        right: -3.5rem;
 
-        width: 7.75rem;
+        width: 7.25rem;
 
-        height: 10.5rem;
+        height: 10rem;
 
     }
 
@@ -6765,7 +6843,7 @@ button
     .invitationScene
     {
 
-        padding-top: 9.75rem;
+        padding-top: 2rem;
 
     }
 
@@ -6893,14 +6971,14 @@ button
     .hasJs .alohaWord
     {
 
-        transform: rotate(-3deg);
+        transform: none;
 
     }
 
     .hasJs .heroInvitationLine
     {
 
-        transform: rotate(1deg);
+        transform: none;
 
     }
 

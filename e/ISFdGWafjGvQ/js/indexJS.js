@@ -346,13 +346,11 @@ function updateMobileInvitationReveal()
 
     const closedEnvelopeBounds = closedEnvelope.getBoundingClientRect();
 
-    const viewportInset = clampNumber(window.innerHeight * 0.025, 12, 24);
+    const remainingEnvelopeRatio = 0.075;
 
-    const fullEnvelopeEntryScroll = window.scrollY + closedEnvelopeBounds.bottom - (window.innerHeight - viewportInset);
+    const revealScroll = window.scrollY + closedEnvelopeBounds.bottom - (window.innerHeight + (closedEnvelopeBounds.height * remainingEnvelopeRatio));
 
-    const closedEnvelopePause = clampNumber(window.innerHeight * 0.1, 56, 84);
-
-    if (window.scrollY >= fullEnvelopeEntryScroll + closedEnvelopePause)
+    if (window.scrollY >= revealScroll)
     {
 
         revealInvitation();
