@@ -24,6 +24,8 @@ const flightMap = document.querySelector('.flightMap');
 
 const flightPath = document.querySelector('[data-flight-path]');
 
+const flightPathShadow = document.querySelector('.flightPathShadow');
+
 const explorerVehicle = document.querySelector('[data-explorer-vehicle]');
 
 const journeyStops = Array.from(document.querySelectorAll('[data-journey-stop]'));
@@ -58,7 +60,13 @@ const submitLabel = document.querySelector('[data-submit-label]');
 
 const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
 
+const mobileLayoutPreference = window.matchMedia('(max-width: 47.98rem)');
+
 const confettiColors = ['#f36f67', '#ffd85b', '#16abc0', '#176b58', '#ff9a58', '#ffffff'];
+
+const desktopFlightPath = 'M 18 13 C 82 10, 84 27, 48 31 C 14 35, 13 48, 56 50 C 92 53, 88 66, 48 69 C 15 72, 17 87, 82 89';
+
+const mobileFlightPath = 'M 20 13 C 75 10, 78 25, 52 31 C 25 36, 20 43, 50 50 C 78 56, 75 64, 50 69 C 23 75, 28 86, 78 89';
 
 let activeRsvpTrigger = null;
 
@@ -161,6 +169,15 @@ function revealAllStaticItems()
 
 }
 
+function revealInvitation()
+{
+
+    invitationEnvelope?.classList.add('isRevealed');
+
+    invitationHint?.classList.add('isVisible');
+
+}
+
 function initializeRevealObserver()
 {
 
@@ -232,9 +249,14 @@ function initializeRevealObserver()
 
             }
 
-            invitationEnvelope.classList.add('isRevealed');
+            if (mobileLayoutPreference.matches)
+            {
 
-            invitationHint?.classList.add('isVisible');
+                return;
+
+            }
+
+            revealInvitation();
 
             observer.disconnect();
 
@@ -303,6 +325,42 @@ function updateLiloPresentation(progress)
 
 }
 
+function updateMobileInvitationReveal()
+{
+
+    if (!mobileLayoutPreference.matches || motionPreference.matches || !invitationEnvelope || invitationEnvelope.classList.contains('isRevealed'))
+    {
+
+        return;
+
+    }
+
+    const closedEnvelope = invitationEnvelope.querySelector('.envelopeBack');
+
+    if (!closedEnvelope)
+    {
+
+        return;
+
+    }
+
+    const closedEnvelopeBounds = closedEnvelope.getBoundingClientRect();
+
+    const viewportInset = clampNumber(window.innerHeight * 0.025, 12, 24);
+
+    const fullEnvelopeEntryScroll = window.scrollY + closedEnvelopeBounds.bottom - (window.innerHeight - viewportInset);
+
+    const closedEnvelopePause = clampNumber(window.innerHeight * 0.1, 56, 84);
+
+    if (window.scrollY >= fullEnvelopeEntryScroll + closedEnvelopePause)
+    {
+
+        revealInvitation();
+
+    }
+
+}
+
 function updateFloatingRsvp()
 {
 
@@ -332,6 +390,8 @@ function updateFloatingRsvp()
 function updateInvitationStory()
 {
 
+    updateMobileInvitationReveal();
+
     updateLiloPresentation(getInvitationProgress());
 
     updateFloatingRsvp();
@@ -343,6 +403,17 @@ function updateInvitationStory()
 /* ============================================================
    SCROLL-CONTROLLED FLIGHT
 ============================================================ */
+
+function updateFlightPathForViewport()
+{
+
+    const activeFlightPath = mobileLayoutPreference.matches ? mobileFlightPath : desktopFlightPath;
+
+    flightPath?.setAttribute('d', activeFlightPath);
+
+    flightPathShadow?.setAttribute('d', activeFlightPath);
+
+}
 
 function updateJourneyStops(progress)
 {
@@ -797,6 +868,8 @@ function initializeRsvpForm()
 function initializePage()
 {
 
+    updateFlightPathForViewport();
+
     revealPage();
 
     initializeRevealObserver();
@@ -814,6 +887,18 @@ window.addEventListener('scroll', requestScrollSceneUpdate, { passive: true });
 window.addEventListener('resize', requestScrollSceneUpdate);
 
 motionPreference.addEventListener?.('change', requestScrollSceneUpdate);
+
+mobileLayoutPreference.addEventListener?.(
+    'change',
+    () =>
+    {
+
+        updateFlightPathForViewport();
+
+        requestScrollSceneUpdate();
+
+    }
+);
 
 if (document.readyState === 'complete')
 {
