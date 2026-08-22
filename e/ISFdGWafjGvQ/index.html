@@ -474,7 +474,13 @@
                         Adventure this way!
                     </h2>
 
-                    <p>Scroll to fly</p>
+                    <p class="journeyScrollCue">
+
+                        <span class="journeyScrollCueText">Scroll to fly</span>
+
+                        <span class="journeyScrollCueArrow" aria-hidden="true">↓</span>
+
+                    </p>
 
                 </div>
 
@@ -487,13 +493,13 @@
 
                     <path
                         class="flightPathShadow"
-                        d="M 18 13 C 82 10, 84 27, 48 31 C 14 35, 13 48, 56 50 C 92 53, 88 66, 48 69 C 15 72, 17 87, 82 89"
+                        d="M 18 13 C 82 10, 84 25, 48 28 C 14 31, 13 40, 56 42 C 92 44, 88 54, 48 56 C 14 58, 13 69, 56 71 C 92 73, 88 86, 82 89"
                     ></path>
 
                     <path
                         class="flightPath"
                         data-flight-path
-                        d="M 18 13 C 82 10, 84 27, 48 31 C 14 35, 13 48, 56 50 C 92 53, 88 66, 48 69 C 15 72, 17 87, 82 89"
+                        d="M 18 13 C 82 10, 84 25, 48 28 C 14 31, 13 40, 56 42 C 92 44, 88 54, 48 56 C 14 58, 13 69, 56 71 C 92 73, 88 86, 82 89"
                     ></path>
 
                 </svg>
@@ -507,6 +513,8 @@
                 <span class="pathMarker pathMarkerFour" aria-hidden="true"></span>
 
                 <span class="pathMarker pathMarkerFive" aria-hidden="true"></span>
+
+                <span class="pathMarker pathMarkerSix" aria-hidden="true"></span>
 
                 <div class="explorerVehicle" data-explorer-vehicle aria-hidden="true">
 
@@ -542,7 +550,7 @@
                     <article
                         class="journeyStop dateStop"
                         data-journey-stop
-                        data-stop-progress="0.20"
+                        data-stop-progress="0.13"
                     >
 
                         <div class="sunBadge" aria-hidden="true">
@@ -564,7 +572,7 @@
                     <article
                         class="journeyStop timeStop"
                         data-journey-stop
-                        data-stop-progress="0.38"
+                        data-stop-progress="0.28"
                     >
 
                         <div class="surfboardObject">
@@ -582,7 +590,7 @@
                     <article
                         class="journeyStop homeStop"
                         data-journey-stop
-                        data-stop-progress="0.56"
+                        data-stop-progress="0.43"
                     >
 
                         <div class="woodSignObject">
@@ -602,7 +610,7 @@
                     <article
                         class="journeyStop locationStop"
                         data-journey-stop
-                        data-stop-progress="0.73"
+                        data-stop-progress="0.58"
                     >
 
                         <div class="postcardObject">
@@ -620,9 +628,29 @@
                     </article>
 
                     <article
+                        class="journeyStop feastStop"
+                        data-journey-stop
+                        data-stop-progress="0.73"
+                    >
+
+                        <div class="feastObject">
+
+                            <span class="feastPineapple" aria-hidden="true"></span>
+
+                            <span class="stopLabel">Island feast</span>
+
+                            <h3>Come hungry</h3>
+
+                            <p>We'll have plenty of food waiting for you!</p>
+
+                        </div>
+
+                    </article>
+
+                    <article
                         class="journeyStop ohanaStop"
                         data-journey-stop
-                        data-stop-progress="0.90"
+                        data-stop-progress="0.89"
                     >
 
                         <div class="flowerBadge" aria-hidden="true">
@@ -710,6 +738,24 @@
                 <div class="rsvpCard">
 
                     <form class="rsvpForm" data-rsvp-form>
+
+                        <!-- Hidden from people, irresistible to bots. A filled
+                             value marks the submission as spam. -->
+
+                        <div class="honeypotField" aria-hidden="true">
+
+                            <label for="partyNickname">Leave this field empty</label>
+
+                            <input
+                                id="partyNickname"
+                                name="honeypot"
+                                type="text"
+                                tabindex="-1"
+                                autocomplete="off"
+                                data-honeypot
+                            >
+
+                        </div>
 
                         <fieldset class="attendanceFieldset">
 
@@ -877,8 +923,8 @@
 
                         </button>
 
-                        <p class="formNote">
-                            Rough-draft preview: your response is not sent yet.
+                        <p class="formNote" data-form-note>
+                            We'll only use this to plan the party.
                         </p>
 
                     </form>
@@ -896,12 +942,174 @@
                         </div>
 
                         <h3 data-success-heading>
-                            Your ohana is on the list.
+                            You're on the guest list!
                         </h3>
 
                         <p data-success-message>
                             We can't wait to celebrate with you.
                         </p>
+
+                        <!-- Attending guests only. Hidden for declines. -->
+
+                        <div class="successActions" data-success-actions hidden>
+
+                            <div class="calendarChoice">
+
+                                <p class="calendarChoiceLabel">
+                                    Add to your calendar
+                                </p>
+
+                                <div class="calendarChoiceOptions">
+
+                                    <button
+                                        class="calendarOption"
+                                        type="button"
+                                        data-calendar-apple
+                                    >
+                                        Apple / iPhone
+                                    </button>
+
+                                    <a
+                                        class="calendarOption"
+                                        data-calendar-google
+                                        href="#"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        Google
+                                    </a>
+
+                                    <a
+                                        class="calendarOption"
+                                        data-calendar-outlook
+                                        href="#"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        Outlook
+                                    </a>
+
+                                    <button
+                                        class="calendarOption"
+                                        type="button"
+                                        data-calendar-download
+                                    >
+                                        Download File
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                            <a
+                                class="successAction"
+                                data-get-directions
+                                href="#"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Get Directions
+                            </a>
+
+                            <button
+                                class="successAction successActionQuiet"
+                                type="button"
+                                data-back-to-party
+                            >
+                                Back to the Party
+                            </button>
+
+                        </div>
+
+                        <!-- Reminders are opt-in only, and never required
+                             to RSVP. Attending guests only. -->
+
+                        <div class="reminderPrompt" data-reminder-prompt hidden>
+
+                            <!-- The offer. Replaced wholesale by the success
+                                 block below once a guest has signed up. -->
+
+                            <div class="reminderOffer" data-reminder-offer>
+
+                            <h4>
+                                Want us to remind you before the party?
+                            </h4>
+
+                            <p class="reminderPromptNote">
+                                Optional — add your email and we'll send a
+                                friendly nudge before the big day.
+                            </p>
+
+                            <form class="reminderForm" data-reminder-form>
+
+                                <div class="honeypotField" aria-hidden="true">
+
+                                    <label for="reminderNickname">Leave this field empty</label>
+
+                                    <input
+                                        id="reminderNickname"
+                                        name="honeypot"
+                                        type="text"
+                                        tabindex="-1"
+                                        autocomplete="off"
+                                        data-honeypot
+                                    >
+
+                                </div>
+
+                                <div class="formGroup">
+
+                                    <label for="reminderEmail">Email address</label>
+
+                                    <input
+                                        id="reminderEmail"
+                                        name="reminderEmail"
+                                        type="email"
+                                        autocomplete="email"
+                                        inputmode="email"
+                                        placeholder="you@example.com"
+                                    >
+
+                                </div>
+
+                                <button
+                                    class="successAction successActionPrimary reminderSubmit"
+                                    type="submit"
+                                    data-reminder-submit
+                                >
+                                    Send Me Reminders
+                                </button>
+
+                            </form>
+
+                            <p
+                                class="reminderStatus"
+                                data-reminder-status
+                                role="status"
+                                aria-live="polite"
+                            ></p>
+
+                            </div>
+
+                            <div
+                                class="reminderSuccess"
+                                data-reminder-success
+                                role="status"
+                                aria-live="polite"
+                                hidden
+                            >
+
+                                <h4>
+                                    You're all set!
+                                </h4>
+
+                                <p>
+                                    We'll send you a reminder before the party.
+                                </p>
+
+                            </div>
+
+                        </div>
 
                         <button class="textButton" type="button" data-edit-rsvp>
                             Edit this response

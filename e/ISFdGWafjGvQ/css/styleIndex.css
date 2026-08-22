@@ -2712,6 +2712,12 @@ button
    FLIGHT JOURNEY
 ============================================================ */
 
+/* ── Journey length ──
+   The stage is a single sticky viewport, so pacing is bought with section
+   height: six waypoints across this run give mobile roughly 1.1 viewports
+   of scroll per beat. Desktop is re-scaled in the tablet query so its
+   per-beat pacing matches the five-stop original. */
+
 .journeySection
 {
 
@@ -2719,9 +2725,9 @@ button
 
     z-index: 3;
 
-    height: 510svh;
+    height: 780svh;
 
-    min-height: 220rem;
+    min-height: 340rem;
 
     background: var(--ocean);
 
@@ -3185,18 +3191,62 @@ button
 
 }
 
-.journeyHeadingGroup p
+/* ── Scroll To Fly cue ── */
+
+.journeyScrollCue
 {
 
-    margin: 0.3rem 0 0;
+    display: inline-flex;
 
-    color: rgba(255, 255, 255, 0.85);
+    align-items: center;
 
-    font-family: var(--scriptFont);
+    gap: 0.45rem;
 
-    font-size: 0.8rem;
+    margin: 0.6rem 0 0;
 
-    font-weight: 700;
+    padding: 0.36rem 0.85rem 0.36rem 1rem;
+
+    color: var(--oceanDeep);
+
+    background: var(--sunshine);
+
+    border: 0.15rem solid rgba(255, 255, 255, 0.92);
+
+    border-radius: 999px;
+
+    box-shadow: 0 0.3rem 0 rgba(202, 79, 79, 0.32), 0 0.7rem 1.3rem rgba(5, 81, 90, 0.3);
+
+    font-family: var(--bodyFont);
+
+    font-size: 0.72rem;
+
+    font-weight: 900;
+
+    letter-spacing: 0.16em;
+
+    line-height: 1;
+
+    text-transform: uppercase;
+
+    transition: opacity 350ms ease, transform 350ms ease;
+
+}
+
+.journeyScrollCueText
+{
+
+    white-space: nowrap;
+
+}
+
+.journeyScrollCueArrow
+{
+
+    font-size: 0.95rem;
+
+    line-height: 1;
+
+    animation: scrollCue 1.8s ease-in-out infinite;
 
 }
 
@@ -3283,48 +3333,60 @@ button
 
 }
 
+/* Markers sit at the outer swing of each flight-path lobe, with the last
+   one parked on the landing point. */
+
 .pathMarkerOne
 {
 
-    top: 25%;
+    top: 23%;
 
-    right: 21%;
+    right: 24%;
 
 }
 
 .pathMarkerTwo
 {
 
-    top: 40%;
+    top: 37%;
 
-    left: 22%;
+    left: 24%;
 
 }
 
 .pathMarkerThree
 {
 
-    top: 55%;
+    top: 50%;
 
-    right: 22%;
+    right: 18%;
 
 }
 
 .pathMarkerFour
 {
 
-    top: 70%;
+    top: 63%;
 
-    left: 20%;
+    left: 24%;
 
 }
 
 .pathMarkerFive
 {
 
+    top: 77%;
+
+    right: 15%;
+
+}
+
+.pathMarkerSix
+{
+
     right: 18%;
 
-    bottom: 9%;
+    bottom: 11%;
 
 }
 
@@ -3639,9 +3701,20 @@ button
 .journeyStop.isActive
 {
 
+    z-index: 2;
+
     opacity: 1;
 
     transform: translateY(0) scale(1) rotate(0);
+
+}
+
+/* A stop that has not been flown past yet must not offer a hidden target. */
+
+.journeyStop:not(.isRevealed) button
+{
+
+    pointer-events: none;
 
 }
 
@@ -3701,7 +3774,7 @@ button
 .dateStop
 {
 
-    top: 21%;
+    top: 20%;
 
     right: 4%;
 
@@ -3775,7 +3848,7 @@ button
 .timeStop
 {
 
-    top: 36%;
+    top: 33%;
 
     left: 3%;
 
@@ -3805,7 +3878,7 @@ button
 .homeStop
 {
 
-    top: 51%;
+    top: 45%;
 
     right: 3%;
 
@@ -3868,7 +3941,7 @@ button
 .locationStop
 {
 
-    top: 66%;
+    top: 56%;
 
     left: 3%;
 
@@ -3958,6 +4031,105 @@ button
 {
 
     max-width: 82%;
+
+}
+
+.feastStop
+{
+
+    top: 66%;
+
+    right: 3%;
+
+}
+
+.feastObject
+{
+
+    position: relative;
+
+    width: clamp(10rem, 44vw, 19rem);
+
+    padding: 0.85rem 1rem 1.25rem;
+
+    background: linear-gradient(168deg, #fffbf1 0%, #ffeecb 62%, #ffe1ae 100%);
+
+    border: 0.24rem solid #e0a24c;
+
+    border-radius: 1.1rem 1.1rem 2.4rem 2.4rem;
+
+    box-shadow: inset 0 0.3rem rgba(255, 255, 255, 0.72), 0 0.8rem 1.5rem rgba(5, 81, 90, 0.24);
+
+    transform: rotate(2.5deg);
+
+}
+
+/* Picnic-cloth trim along the lip of the platter. */
+
+.feastObject::after
+{
+
+    position: absolute;
+
+    right: 0.7rem;
+
+    bottom: 0.42rem;
+
+    left: 0.7rem;
+
+    height: 0.4rem;
+
+    content: "";
+
+    opacity: 0.9;
+
+    background: repeating-linear-gradient(90deg, var(--coral) 0 0.5rem, #fff6df 0.5rem 1rem);
+
+    border-radius: 999px;
+
+}
+
+.feastPineapple
+{
+
+    position: absolute;
+
+    top: -1.15rem;
+
+    right: 0.8rem;
+
+    width: 1.6rem;
+
+    height: 2.05rem;
+
+    background: repeating-linear-gradient(48deg, #f0b338 0 0.22rem, var(--sunshine) 0.22rem 0.44rem);
+
+    border: 0.12rem solid #c98a2e;
+
+    border-radius: 46% 46% 50% 50% / 34% 34% 62% 62%;
+
+    box-shadow: 0 0.4rem 0.6rem rgba(5, 76, 83, 0.2);
+
+}
+
+.feastPineapple::before
+{
+
+    position: absolute;
+
+    top: -0.7rem;
+
+    left: 50%;
+
+    width: 1.1rem;
+
+    height: 0.9rem;
+
+    content: "";
+
+    background: repeating-conic-gradient(from 202deg at 50% 100%, var(--palm) 0 9deg, transparent 9deg 23deg);
+
+    transform: translateX(-50%);
 
 }
 
@@ -4939,6 +5111,423 @@ button
     margin: 0;
 
     color: var(--inkSoft);
+
+}
+
+/* ── Honeypot ──
+   Kept in the layout but out of sight and out of the tab order, so
+   only an automated filler ever reaches it. */
+
+.honeypotField
+{
+
+    position: absolute;
+
+    width: 1px;
+
+    height: 1px;
+
+    overflow: hidden;
+
+    clip-path: inset(50%);
+
+    white-space: nowrap;
+
+}
+
+/* ── Success actions ── */
+
+/* Display lives on the :not([hidden]) rule, matching .rsvpSuccess:
+   a bare `display: flex` here would outrank the hidden attribute
+   and leave the calendar offer showing on a declined RSVP. */
+
+.successActions
+{
+
+    width: min(100%, 22rem);
+
+    flex-direction: column;
+
+    gap: 0.6rem;
+
+    margin-top: 1.75rem;
+
+}
+
+.successActions:not([hidden])
+{
+
+    display: flex;
+
+}
+
+.successAction
+{
+
+    display: inline-flex;
+
+    min-height: 3rem;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 0.8rem 1.35rem;
+
+    color: var(--oceanDeep);
+
+    background: var(--white);
+
+    border: 0.16rem solid rgba(11, 120, 144, 0.28);
+
+    border-radius: 999px;
+
+    font-family: var(--bodyFont);
+
+    font-size: 0.85rem;
+
+    font-weight: 900;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+
+}
+
+.successAction:hover
+{
+
+    background: var(--cream);
+
+    border-color: rgba(11, 120, 144, 0.5);
+
+    transform: translateY(-0.1rem);
+
+}
+
+.successAction:active
+{
+
+    transform: translateY(0.1rem);
+
+}
+
+.successActionPrimary
+{
+
+    color: var(--white);
+
+    background: var(--coral);
+
+    border-color: transparent;
+
+    box-shadow: 0 0.4rem 0 var(--coralDark);
+
+}
+
+.successActionPrimary:hover
+{
+
+    background: #fa7b70;
+
+    border-color: transparent;
+
+    box-shadow: 0 0.3rem 0 var(--coralDark);
+
+}
+
+.successActionPrimary:active
+{
+
+    box-shadow: 0 0.12rem 0 var(--coralDark);
+
+    transform: translateY(0.28rem);
+
+}
+
+.successActionPrimary[disabled]
+{
+
+    opacity: 0.6;
+
+    pointer-events: none;
+
+}
+
+.successActionQuiet
+{
+
+    color: var(--ocean);
+
+    background: transparent;
+
+    border-color: transparent;
+
+    font-size: 0.78rem;
+
+    text-decoration: underline;
+
+    text-underline-offset: 0.25rem;
+
+}
+
+.successActionQuiet:hover
+{
+
+    background: transparent;
+
+    border-color: transparent;
+
+}
+
+/* ── Calendar choice ──
+   Four small targets in a two-by-two grid, which stays legible at
+   320px without any of them wrapping to a second line. */
+
+.calendarChoice
+{
+
+    padding: 0.9rem 0.85rem 0.95rem;
+
+    background: rgba(255, 255, 255, 0.72);
+
+    border: 0.16rem solid rgba(11, 120, 144, 0.22);
+
+    border-radius: 1.25rem;
+
+}
+
+.calendarChoiceLabel
+{
+
+    margin: 0 0 0.65rem;
+
+    color: var(--coralDark);
+
+    font-size: 0.62rem;
+
+    font-weight: 900;
+
+    letter-spacing: 0.11em;
+
+    text-align: center;
+
+    text-transform: uppercase;
+
+}
+
+.calendarChoiceOptions
+{
+
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 0.5rem;
+
+}
+
+.calendarOption
+{
+
+    display: inline-flex;
+
+    min-height: 2.65rem;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 0.55rem 0.4rem;
+
+    color: var(--oceanDeep);
+
+    background: var(--white);
+
+    border: 0.14rem solid rgba(11, 120, 144, 0.26);
+
+    border-radius: 0.85rem;
+
+    font-family: var(--bodyFont);
+
+    font-size: 0.72rem;
+
+    font-weight: 900;
+
+    line-height: 1.15;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+
+}
+
+.calendarOption:hover
+{
+
+    background: var(--cream);
+
+    border-color: rgba(11, 120, 144, 0.5);
+
+    transform: translateY(-0.1rem);
+
+}
+
+.calendarOption:active
+{
+
+    transform: translateY(0.1rem);
+
+}
+
+/* ── Reminder opt-in ── */
+
+.reminderPrompt
+{
+
+    width: min(100%, 22rem);
+
+    padding: 1.25rem 1.15rem 1.1rem;
+
+    margin-top: 1.75rem;
+
+    background: rgba(255, 246, 223, 0.75);
+
+    border: 0.16rem dashed rgba(202, 79, 79, 0.3);
+
+    border-radius: 1.25rem;
+
+    text-align: center;
+
+}
+
+.reminderPrompt h4
+{
+
+    margin: 0 0 0.35rem;
+
+    color: var(--oceanDeep);
+
+    font-family: var(--displayFont);
+
+    font-size: 1.15rem;
+
+    letter-spacing: -0.02em;
+
+    line-height: 1.15;
+
+}
+
+.reminderPromptNote
+{
+
+    margin: 0 0 0.9rem;
+
+    color: var(--inkSoft);
+
+    font-size: 0.74rem;
+
+    line-height: 1.45;
+
+}
+
+.reminderPrompt .formGroup
+{
+
+    margin-bottom: 0.75rem;
+
+    text-align: left;
+
+}
+
+.reminderSubmit
+{
+
+    width: 100%;
+
+}
+
+/* ── Reminder confirmation ──
+   Replaces the offer entirely; the two are never on screen at once. */
+
+.reminderSuccess h4
+{
+
+    margin: 0 0 0.35rem;
+
+    color: var(--palm);
+
+    font-family: var(--displayFont);
+
+    font-size: 1.35rem;
+
+    letter-spacing: -0.02em;
+
+    line-height: 1.15;
+
+}
+
+.reminderSuccess p
+{
+
+    margin: 0;
+
+    color: var(--inkSoft);
+
+    font-size: 0.78rem;
+
+    line-height: 1.45;
+
+}
+
+.reminderStatus
+{
+
+    margin: 0.75rem 0 0;
+
+    color: var(--palm);
+
+    font-size: 0.74rem;
+
+    font-weight: 700;
+
+    line-height: 1.45;
+
+}
+
+.reminderStatus:empty
+{
+
+    display: none;
+
+}
+
+.reminderStatus.hasError
+{
+
+    color: var(--coralDark);
+
+}
+
+.formNote.hasError
+{
+
+    color: var(--coralDark);
+
+    font-weight: 700;
+
+}
+
+.rsvpForm.isSubmitting .submitButton
+{
+
+    opacity: 0.7;
+
+    pointer-events: none;
 
 }
 
@@ -5941,6 +6530,8 @@ button
 
     left: auto;
 
+    width: auto;
+
     max-width: none;
 
     justify-self: stretch;
@@ -5953,7 +6544,10 @@ button
 
 }
 
-.noJs .journeyStop > div
+/* Only the copy stretches to the column; the decorative badges keep the
+   size their own rules give them. */
+
+.noJs .journeyStop > div:not(.sunBadge):not(.flowerBadge)
 {
 
     width: 100%;
@@ -6186,6 +6780,50 @@ button
 
     }
 
+    /* Keep the stage inside short handsets so the landing stop is never
+       clipped below the fold. */
+
+    .journeySticky
+    {
+
+        min-height: 32rem;
+
+    }
+
+    .journeyScrollCue
+    {
+
+        margin-top: 0.7rem;
+
+        padding: 0.5rem 1.05rem 0.5rem 1.2rem;
+
+        border-width: 0.18rem;
+
+        font-size: 0.86rem;
+
+        letter-spacing: 0.2em;
+
+    }
+
+    .journeyScrollCueArrow
+    {
+
+        font-size: 1.1rem;
+
+    }
+
+    /* Once Stitch is flying the prompt has done its job and frees the
+       headroom the first waypoint needs. */
+
+    .journeySticky.hasJourneyStarted .journeyScrollCue
+    {
+
+        opacity: 0;
+
+        transform: translateY(-0.5rem) scale(0.9);
+
+    }
+
     .flightPathShadow
     {
 
@@ -6202,26 +6840,87 @@ button
 
     }
 
+    /* Two narrow columns that never meet, so a left-hand waypoint can sit
+       alongside a right-hand one without either being crowded. */
+
     .journeyStop
     {
 
-        max-width: min(54vw, 13rem);
+        width: min(46vw, 12rem);
+
+        max-width: min(46vw, 12rem);
 
     }
+
+    .journeyStop .stopCopy
+    {
+
+        min-width: 0;
+
+        flex: 1 1 auto;
+
+    }
+
+    .surfboardObject,
+    .woodSignObject,
+    .postcardObject,
+    .feastObject
+    {
+
+        width: 100%;
+
+    }
+
+    /* The date keeps its sun alongside the copy, so it is allowed a wider
+       card than the two-column stops. Its neighbour sits far enough below
+       that the extra width never meets another waypoint. */
 
     .dateStop
     {
 
-        right: 0.75rem;
+        width: min(64vw, 16rem);
 
-        max-width: calc(100% - 1.5rem);
+        max-width: min(64vw, 16rem);
 
     }
 
-    .dateStop .stopCopy
+    /* Six stops alternate strictly left/right on a phone, so the landing
+       stop crosses to the left column. That also lifts it clear of the
+       floating RSVP button parked in the bottom-right corner. */
+
+    .ohanaStop
     {
 
-        min-width: 0;
+        right: auto;
+
+        bottom: 11%;
+
+        left: 3%;
+
+    }
+
+    .pathMarkerSix
+    {
+
+        right: 38%;
+
+    }
+
+    .feastObject
+    {
+
+        padding-bottom: 1.1rem;
+
+    }
+
+    .feastPineapple
+    {
+
+        top: -1rem;
+
+        width: 1.4rem;
+
+        height: 1.8rem;
 
     }
 
@@ -6257,6 +6956,37 @@ button
         left: -6%;
 
         width: 112%;
+
+    }
+
+}
+
+/* ── One waypoint at a time on handsets ──
+   A phone stage cannot hold six cards at once, so each waypoint owns the
+   screen for its stretch of the flight and hands off to the next. The
+   trail is still told by the path, the markers and the progress bar.
+   Excluded under reduced motion, where the stops become a plain list. */
+
+@media (max-width: 47.98rem) and (prefers-reduced-motion: no-preference)
+{
+
+    .journeyStop.isRevealed:not(.isActive)
+    {
+
+        opacity: 0;
+
+        filter: blur(0.3rem);
+
+        transform: translateY(-0.9rem) scale(0.88) rotate(-1.5deg);
+
+        transition: opacity 180ms ease, filter 180ms ease, transform 320ms ease;
+
+    }
+
+    .journeyStop.isRevealed:not(.isActive) button
+    {
+
+        pointer-events: none;
 
     }
 
@@ -6488,10 +7218,15 @@ button
 
     }
 
+    /* Six beats at the five-stop cadence: the added stop buys extra height
+       rather than a faster ride. */
+
     .journeySection
     {
 
-        height: 540svh;
+        height: 630svh;
+
+        min-height: 260rem;
 
     }
 
@@ -6504,6 +7239,7 @@ button
 
     .dateStop,
     .homeStop,
+    .feastStop,
     .ohanaStop
     {
 
@@ -6516,6 +7252,44 @@ button
     {
 
         left: 8%;
+
+    }
+
+    /* The desktop stage keeps every stop on screen at once, so the run is
+       re-spaced to seat the sixth without crowding the landing. */
+
+    .dateStop
+    {
+
+        top: 21%;
+
+    }
+
+    .timeStop
+    {
+
+        top: 36%;
+
+    }
+
+    .homeStop
+    {
+
+        top: 48%;
+
+    }
+
+    .locationStop
+    {
+
+        top: 58%;
+
+    }
+
+    .feastStop
+    {
+
+        top: 63%;
 
     }
 
@@ -6868,18 +7642,47 @@ button
     }
 
     .timeStop,
-    .locationStop
+    .locationStop,
+    .ohanaStop
     {
 
         left: 2%;
 
     }
 
-    .homeStop,
+    /* The wide date card reaches across both columns on the narrowest
+       screens, so island time drops clear of its hand-off. */
+
+    .timeStop
+    {
+
+        top: 37%;
+
+    }
+
     .ohanaStop
     {
 
+        bottom: 15%;
+
+    }
+
+    .homeStop,
+    .feastStop
+    {
+
         right: 2%;
+
+    }
+
+    .journeyScrollCue
+    {
+
+        padding: 0.46rem 0.9rem 0.46rem 1rem;
+
+        font-size: 0.78rem;
+
+        letter-spacing: 0.16em;
 
     }
 
@@ -7065,6 +7868,8 @@ button
 
         left: auto;
 
+        width: auto;
+
         max-width: none;
 
         justify-self: stretch;
@@ -7077,7 +7882,7 @@ button
 
     }
 
-    .journeyStop > div
+    .journeyStop > div:not(.sunBadge):not(.flowerBadge)
     {
 
         width: 100%;
